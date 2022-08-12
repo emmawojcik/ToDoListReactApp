@@ -8,13 +8,13 @@ function App() {
   let myItems = [...toDoItems];
 
   // When the Add button is clicked, add the inputted item to myItems and update toDoItems state with myItems array
-  const handleClick = () => {
+  const handleAddClick = () => {
     myItems.push(itemToAdd);
     updateList(myItems);
   }
 
   // When input field is changed, update itemToAdd state with value of input field (possible because it is passed event target)
-  const handleChange = (event) => {
+  const handleInputChange = (event) => {
     updateItemToAdd(event.target.value);
   }
 
@@ -24,20 +24,45 @@ function App() {
         type="text"
         id="listItem"
         name="listItem"
-        onChange={handleChange}
+        onChange={handleInputChange}
         value={itemToAdd}
       />
 
-      <button onClick={handleClick}>Add</button>
-      
-      {/* Each item in toDoItems is displayed */}
-      {toDoItems.map((listItem, index) => {
+      <button onClick={handleAddClick}>Add</button>
+      <ListItemCard items={toDoItems} updateList={updateList} itemsCopy={myItems} />
+      {/* {toDoItems.map((listItem, index) => {
         return(
           <h2 key={index}>{listItem}</h2>
         )
-      })}
+      })} */}
     </div>
   );
+}
+
+const ListItemCard = (props) => {
+
+  const handleDeleteClick = (index) => {
+    props.itemsCopy.splice(index, 1);
+    props.updateList(props.itemsCopy);
+  }
+
+  const handleCompletedClick = () => {
+
+  }
+
+  return(
+    <>
+      {props.items.map((listItem, index) => {
+        return(
+          <div key={index}>
+            <h2>{listItem}</h2>
+            <button>Check</button>
+            <button onClick={() => handleDeleteClick(index)}>Delete</button>
+          </div>
+        )
+      })}
+    </>
+  )
 }
 
 export default App;
