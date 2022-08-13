@@ -4,7 +4,7 @@ import './App.css';
 function App() {
 
   let [toDoItems, updateList] = useState([]);
-  let [itemToAdd, updateItemToAdd] = useState('');
+  let [itemToAdd, updateItemToAdd] = useState({item: '', completed: false});
   let myItems = [...toDoItems];
 
   // When the Add button is clicked, add the inputted item to myItems and update toDoItems state with myItems array
@@ -15,7 +15,7 @@ function App() {
 
   // When input field is changed, update itemToAdd state with value of input field (possible because it is passed event target)
   const handleInputChange = (event) => {
-    updateItemToAdd(event.target.value);
+    updateItemToAdd({item: event.target.value, completed: false});
   }
 
   return (
@@ -25,29 +25,28 @@ function App() {
         id="listItem"
         name="listItem"
         onChange={handleInputChange}
-        value={itemToAdd}
+        value={{itemToAdd}.item}
       />
 
       <button onClick={handleAddClick}>Add</button>
       <ListItemCard items={toDoItems} updateList={updateList} itemsCopy={myItems} />
-      {/* {toDoItems.map((listItem, index) => {
-        return(
-          <h2 key={index}>{listItem}</h2>
-        )
-      })} */}
+
     </div>
   );
 }
 
 const ListItemCard = (props) => {
 
+  // Remove item at given index from array and update state 
   const handleDeleteClick = (index) => {
     props.itemsCopy.splice(index, 1);
     props.updateList(props.itemsCopy);
   }
 
-  const handleCompletedClick = () => {
-
+  // Update list item completed property with value of true and update state
+  const handleCompletedClick = (index) => {
+    props.itemsCopy[index] = {item: props.itemsCopy[index].item, completed: true}
+    props.updateList(props.itemsCopy);
   }
 
   return(
@@ -55,8 +54,11 @@ const ListItemCard = (props) => {
       {props.items.map((listItem, index) => {
         return(
           <div key={index}>
-            <h2>{listItem}</h2>
-            <button>Check</button>
+            {(listItem.completed)?
+              <h2 className="strikethrough">{listItem.item}</h2> :
+              <h2>{listItem.item}</h2>
+            }
+            <button onClick={() => handleCompletedClick(index)}>Complete</button>
             <button onClick={() => handleDeleteClick(index)}>Delete</button>
           </div>
         )
