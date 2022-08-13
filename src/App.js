@@ -19,16 +19,21 @@ function App() {
   }
 
   return (
-    <div>     
-      <input
-        type="text"
-        id="listItem"
-        name="listItem"
-        onChange={handleInputChange}
-        value={{itemToAdd}.item}
-      />
+    <div id="outerDiv">
+      <h1>Tasks</h1>
+      <div id='inputDiv'>
+        <input
+          type="text"
+          id="listItem"
+          name="listItem"
+          onChange={handleInputChange}
+          value={{itemToAdd}.item}
+          placeholder= "Enter a task"
+        />
 
-      <button onClick={handleAddClick}>Add</button>
+        <button onClick={handleAddClick}>+</button>
+      </div>     
+
       <ListItemCard items={toDoItems} updateList={updateList} itemsCopy={myItems} />
 
     </div>
@@ -43,9 +48,10 @@ const ListItemCard = (props) => {
     props.updateList(props.itemsCopy);
   }
 
-  // Update list item completed property with value of true and update state
+  // Change list item completed property to opposite boolean value and update the state
   const handleCompletedClick = (index) => {
-    props.itemsCopy[index] = {item: props.itemsCopy[index].item, completed: true}
+    let currentCompletedBool = props.itemsCopy[index].completed
+    props.itemsCopy[index] = {item: props.itemsCopy[index].item, completed: !currentCompletedBool}
     props.updateList(props.itemsCopy);
   }
 
@@ -53,13 +59,16 @@ const ListItemCard = (props) => {
     <>
       {props.items.map((listItem, index) => {
         return(
-          <div key={index}>
+          <div id="toDoItem" key={index}>
             {(listItem.completed)?
-              <h2 className="strikethrough">{listItem.item}</h2> :
-              <h2>{listItem.item}</h2>
+              <h3 id="completed">{listItem.item}</h3> :
+              <h3 id="uncompleted">{listItem.item}</h3>
             }
-            <button onClick={() => handleCompletedClick(index)}>Complete</button>
-            <button onClick={() => handleDeleteClick(index)}>Delete</button>
+            <div id="listButtons">
+              <button id="completeButton" onClick={() => handleCompletedClick(index)}>✓</button>
+              <button id="deleteButton" onClick={() => handleDeleteClick(index)}>X</button>            
+            </div>
+
           </div>
         )
       })}
