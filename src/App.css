@@ -1,3 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree&display=swap');
+
+*{
+  font-family: 'Figtree', sans-serif;
+}
 
 #completed {
   width: 80%;
@@ -16,7 +21,7 @@
 #outerDiv {
   display: flex;
   flex-direction: column;
-  align-content: center;
+  /* align-content: center; */
   background-color: rgb(62, 183, 210);
   padding: 10px;
   align-items: center;

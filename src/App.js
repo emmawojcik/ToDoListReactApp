@@ -28,15 +28,12 @@ function App() {
           name="listItem"
           onChange={handleInputChange}
           value={{itemToAdd}.item}
-          placeholder= "Enter a task"
+          placeholder= "Add a task"
         />
-
         <button onClick={handleAddClick}>+</button>
       </div>     
-
       <ListItemCard items={toDoItems} updateList={updateList} itemsCopy={myItems} />
-
-    </div>
+    </div>      
   );
 }
 
