@@ -7,15 +7,16 @@ function App() {
   let [itemToAdd, updateItemToAdd] = useState({item: '', completed: false});
   let myItems = [...toDoItems];
 
-  // When the Add button is clicked, add the inputted item to myItems and update toDoItems state with myItems array
-  const handleAddClick = () => {
-    myItems.push(itemToAdd);
-    updateList(myItems);
-  }
-
   // When input field is changed, update itemToAdd state with value of input field (possible because it is passed event target)
   const handleInputChange = (event) => {
     updateItemToAdd({item: event.target.value, completed: false});
+  }
+
+  // When the Add button is clicked, add the inputted item to myItems and update toDoItems state with myItems array
+  const handleAddClick = () => {
+    myItems.push(itemToAdd); 
+    updateList(myItems);
+    updateItemToAdd({item: '', completed: false});
   }
 
   return (
@@ -26,8 +27,8 @@ function App() {
           type="text"
           id="listItem"
           name="listItem"
+          value={itemToAdd.item}
           onChange={handleInputChange}
-          value={{itemToAdd}.item}
           placeholder= "Add a task"
         />
         <button onClick={handleAddClick}>+</button>
